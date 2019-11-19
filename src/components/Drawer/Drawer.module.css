@@ -1,0 +1,39 @@
+.DrawerContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.7);
+    min-width: 250px;
+    padding: 4px;
+    position: fixed;
+    right: -5px;
+    top: 35%;
+    align-content: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 4px solid #FFC45E;
+    z-index:9999;
+    resize: both;
+    overflow: auto;
+}
+
+.TitleBanner {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    border-bottom: 1px solid #aaa;
+    color: #000;
+    justify-content: space-around;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    align-items: center;
+}
+
+.ButtonContainer {
+    height:30px;
+    width: 30px;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

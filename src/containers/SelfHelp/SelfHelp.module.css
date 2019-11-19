@@ -1,0 +1,61 @@
+.container {
+    /* color: red; */
+    display: flex;
+    flex-direction: column;
+}
+
+.widget {
+    /* background-color: #FFB64C; */
+    min-width: 140px;
+    max-width: 200px;
+    padding: 4;
+    /* background-color: this.props.themeColor; */
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    right: -55px;
+    top: 45%;
+    transform: rotate(90deg);
+    align-content: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    border-radius: 6px;
+    padding: 5px;
+    padding-top: 3px;
+    font-size: 18px;
+}
+
+.widget:hover {
+    cursor: pointer;
+    background-color: red;
+}
+
+.widgetTextContainer {
+    display: flex;
+    flex-direction: row;
+    color: #fff;
+    font-size: 18;
+    font-weight: bold;
+    align-content: center;
+    justify-content: center;
+}
+
+.ButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+}
+
+.ButtonContainer:hover {
+    cursor: pointer;
+}
+
+.PopupButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
