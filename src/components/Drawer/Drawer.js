@@ -45,7 +45,7 @@ class Drawer extends Component {
                     
                     {/* TaskList */}
                     {this.props.activeScreen === this.props.screens.LIST_OF_WORKFLOWS &&
-                    <TaskList tasks={this.props.tasks} handleTaskPlay={this.props.handleTaskPlay}/>}
+                    <TaskList tasks={this.props.tasks} handleTaskPlay={this.props.handleTaskPlay} handleDeleteTask={this.props.handleDeleteTask}/>}
     
                     {/* Add Task */}
                     {
@@ -62,7 +62,7 @@ class Drawer extends Component {
                                     return ( <div key={index} style={{display:'flex',flexDirection:'row',paddingLeft:5, paddingRight: 5, paddingBottom: 2}}>
                                                 <div style={{display:'flex',flex:85,color:'#007bff'}}>{step.stepName}</div>
                                                 <div style={{display:'flex',flex:15,color:'red',alignItems:'flex-end'}}>
-                                                    <i className="fa fa-trash" style={{ marginLeft: 5, paddingBottom: 3, fontSize:'14px'}}></i>
+                                                    <i className="fa fa-trash" style={{ marginLeft: 5, paddingBottom: 3, fontSize:'14px'}} onClick={()=>this.props.deleteStep(index)}></i>
                                                 </div>
                                             </div>
                                     )

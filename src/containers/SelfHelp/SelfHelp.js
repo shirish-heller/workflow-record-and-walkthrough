@@ -14,10 +14,6 @@ class SelfHelp extends Component {
 
     constructor(props) {
         super(props);
-        let persistedState = localStorage.getItem("selfHelpState");
-        if(persistedState) {
-            this.state = JSON.parse(localStorage.getItem("selfHelpState"));
-        } else {
             this.state = {
                 recordClickCapture: {
                     screenWidth: window.innerWidth,
@@ -69,8 +65,6 @@ class SelfHelp extends Component {
                     xPath:''
                 }
             };
-    
-        }
         this.stepNameRef = React.createRef();
     }
 
@@ -132,20 +126,20 @@ class SelfHelp extends Component {
 
     onAddStepClick = (taskNameRef)=> {
 
-        if(taskNameRef.current && taskNameRef.current.value !== "") {
-            if(this.state.draftTask.taskName.trim() === "") {
-                this.setState({
-                    draftTask: {
-                        ...this.state.draftTask,
-                        taskName: taskNameRef.current.value
-                    }
-                });
-            }
+        if(this.state.draftTask.taskName.trim() !== "") {
             this.startInspectMode();
-        } else if(this.state.draftTask.steps.length!==0) {
-            this.startInspectMode();
+        } else if(taskNameRef.current && taskNameRef.current.value !== "") {
+                if(this.state.draftTask.taskName.trim() === "") {
+                    this.setState({
+                        draftTask: {
+                            ...this.state.draftTask,
+                            taskName: taskNameRef.current.value
+                        }
+                    });
+                }
+                this.startInspectMode();
         } else {
-            alert("Workflow name is empty");
+                alert("Workflow name is empty");
         }
     };
 
@@ -373,6 +367,27 @@ class SelfHelp extends Component {
         })
     }
 
+    deleteStep = (index)=> {
+        console.log(index + " item will be deleted")
+        let tempSteps = this.state.draftTask.steps;
+        tempSteps.splice(index,1);
+        this.setState({
+            draftTask:{
+                ...this.state.draftTask,
+                steps:tempSteps
+            }
+        });
+    }
+
+    handleDeleteTask = (index)=> {
+        console.log(index + " item will be deleted")
+        let tempTasks = this.state.tasks;
+        tempTasks.splice(index,1);
+        this.setState({
+            tasks: tempTasks
+        });
+    }
+
     handleFinishTask = ()=> {
         //store it in tasks array
         if(this.state.draftTask.taskName === ""){
@@ -410,7 +425,8 @@ class SelfHelp extends Component {
                  <Drawer activeScreen={this.state.activeScreen} tasks={this.state.tasks} handleTaskPlay={this.handleTaskPlay}
                  handleDrawerCollapse={this.handleDrawerCollapse} screens={this.state.screens} handleAddTask={this.handleAddTask}
                  draftTask={this.state.draftTask} draftStep={this.state.draftStep} startInspectMode={this.startInspectMode} 
-                 handleFinishTask={this.handleFinishTask} onAddStepClick={this.onAddStepClick} handleCancelClick={this.handleCancelClick}></Drawer>
+                 handleFinishTask={this.handleFinishTask} onAddStepClick={this.onAddStepClick} handleCancelClick={this.handleCancelClick} 
+                 deleteStep={this.deleteStep} handleDeleteTask={this.handleDeleteTask}></Drawer>
                 }
 
                 {/* Guide-Popup */}
@@ -425,7 +441,7 @@ class SelfHelp extends Component {
                             Skip
                         </Button>
 
-                        {this.state.currentStep && this.state.currentStep === this.state.tasks[this.state.currentTask].steps.length-1?
+                        {this.state.currentStep!==null && this.state.currentStep === (this.state.tasks[this.state.currentTask].steps.length)-1?
                     // FINISH Button
                         <Button variant="light" className={styles.ButtonContainer}
                             style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 16, outline: 'none'}} onClick={this.stopGuide}>

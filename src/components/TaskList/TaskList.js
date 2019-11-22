@@ -5,9 +5,9 @@ export const TaskList = (props)=> {
     return (
             <div style={{marginTop: '12px'}}>
             {
-                props.tasks.map(task=> {
+                props.tasks.length !== 0 && props.tasks.map((task, index)=> {
                     return (
-                        <ListItem key={task.taskId} item={task} handleTaskPlay={props.handleTaskPlay}/>
+                        <ListItem key={task.taskId} item={task} handleTaskPlay={props.handleTaskPlay} handleDeleteTask={()=> props.handleDeleteTask(index)}/>
                     )
                 })
             }{

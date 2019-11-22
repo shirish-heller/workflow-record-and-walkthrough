@@ -7,8 +7,6 @@ import {
 // import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 export const ListItem = (props)=> {
-
-
     return (
         <div className={styles.container}>
             <div className={styles.TaskNameContainer}>
@@ -27,20 +25,16 @@ export const ListItem = (props)=> {
                     className={styles.ButtonContainer}
                     style={{marginRight: 3}}
                     size="sm"
-                //    onClick={props.handleTaskPlay.bind(this, props.item.taskId)}>
-                      onClick={()=> props.handleTaskPlay(props.item.taskId)}> 
-                    {/* <Glyphicon glyph="trash"/> Remove */}
+                    onClick={()=> props.handleTaskPlay(props.item.taskId)}> 
                     <i className="fa fa-play" style={{fontSize:'12px'}}></i>
                     </Button>
                 <Button
                     variant="danger"
                     className={styles.ButtonContainer}
-                    size="sm">
-                {/* //    onClick={props.handleTaskPlay.bind(this, props.item.taskId)}>
-                    // onClick={(props)=> props.handleTaskPlay(props.item.taskId)}> */}
-                    {/* <Glyphicon glyph="trash"/> Remove */}
+                    size="sm"
+                    onClick={props.handleDeleteTask}
+                    >
                     <i className="fa fa-trash" style={{fontSize:'13px'}}></i>
-
                 </Button>
             </div>
 
