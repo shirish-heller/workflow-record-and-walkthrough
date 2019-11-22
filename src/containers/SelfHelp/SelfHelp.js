@@ -433,18 +433,18 @@ class SelfHelp extends Component {
                 {
                 this.state.isGuideStepPopupOpen && 
                 <Popup clickCapture={this.state.guideClickCapture}>
-                    {this.getStepMessage()}
+                    <span style={{fontSize: 15}}>{this.getStepMessage()}</span>
                     <div className={styles.PopupButtonContainer}>
                     {/* SKIP Button */}
                         <Button variant="link" className={styles.ButtonContainer}
-                            style={{color: '#fff', minWidth: 70, fontWeight: 'bold', fontSize: 16, textDecoration: 'underline', outline: 'none'}} onClick={this.stopGuide}>
+                            style={{color: '#fff', minWidth: 70, fontWeight: 'bold', fontSize: 14, textDecoration: 'underline', outline: 'none'}} onClick={this.stopGuide}>
                             Skip
                         </Button>
 
                         {this.state.currentStep!==null && this.state.currentStep === (this.state.tasks[this.state.currentTask].steps.length)-1?
                     // FINISH Button
                         <Button variant="light" className={styles.ButtonContainer}
-                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 16, outline: 'none'}} onClick={this.stopGuide}>
+                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.stopGuide}>
                             Finish
                             <i className="fa fa-check-circle" style={{color: this.state.theme, marginLeft: 3, fontSize: 16}}/>
                         </Button>    
@@ -452,7 +452,7 @@ class SelfHelp extends Component {
                     // NEXT Button
                         <Button
                             variant="light" className={styles.ButtonContainer}
-                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 16, outline: 'none'}} onClick={this.handleNextStepPress}>
+                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.handleNextStepPress}>
                             Next   
                             <i className="fa fa-angle-right" style={{color: this.state.theme, marginLeft: 4, fontSize: 16}}/>
                         </Button>

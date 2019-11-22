@@ -59,8 +59,9 @@ class Drawer extends Component {
     
                                 {
                                     this.props.draftTask.steps.map((step,index) => {
-                                    return ( <div key={index} style={{display:'flex',flexDirection:'row',paddingLeft:5, paddingRight: 5, paddingBottom: 2}}>
-                                                <div style={{display:'flex',flex:85,color:'#007bff'}}>{step.stepName}</div>
+                                    return ( <div key={index} style={{display:'flex',flexDirection:'row', flex: 1, width: '70%', justifyContent: 'flex-start', paddingLeft:5, paddingRight: 5, paddingBottom: 2}}>
+                                                <i className="fa fa-arrow-right" style={{paddingTop: 3, paddingRight: 4}}></i>
+                                                <div style={{display:'flex',flex:85,color:'#007bff', textAlign: 'left'}}>{step.stepName}</div>
                                                 <div style={{display:'flex',flex:15,color:'red',alignItems:'flex-end'}}>
                                                     <i className="fa fa-trash" style={{ marginLeft: 5, paddingBottom: 3, fontSize:'14px'}} onClick={()=>this.props.deleteStep(index)}></i>
                                                 </div>
