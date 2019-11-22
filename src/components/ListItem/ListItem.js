@@ -14,7 +14,7 @@ export const ListItem = (props)=> {
             <div className={styles.TaskNameContainer}>
                 {/* <Glyphicon style={{paddingTop: 2, marginRight: 5}} glyph="arrow-right"/> */}
                 <i className="fa fa-arrow-right" style={{paddingTop: 3, paddingRight: 4}}></i>
-                {props.item.taskName}
+                <span style={{textAlign: 'left'}}>{props.item.taskName}</span>
             </div>
 
             {/* Actions Container */}

@@ -1,176 +1,81 @@
 import React, { Component } from 'react';
 import styles from './SelfHelp.module.css';
-import { Drawer } from '../../components/Drawer/Drawer';
 import { Popup } from '../../components/Popup/Popup';
 import {
-    Button
+    Button, Form
 } from 'react-bootstrap';
+import $ from 'jquery';
+import Drawer from '../../components/Drawer/Drawer';
 
-const screens={
-    LIST_OF_WORKFLOWS:"LIST_OF_WORKFLOWS",
-    DESCRIPTION_OF_WORKFLOW:"DESCRIPTION_OF_WORKFLOW",
-    CREATE_WORKFLOW:"CREATE_WORKFLOW"
-};
-
+let lastElementHighlighted = null;
+let lastElementHighlightedBGColor = null;
+let lastRecordedXPath = null;
 class SelfHelp extends Component {
-
 
     constructor(props) {
         super(props);
-        this.state = {
-            activeScreen:screens.LIST_OF_WORKFLOWS,
-            recordClickCapture: {
-                screenWidth: window.innerWidth,
-                screenHeight: window.innerHeight,
-                clientX: window.innerWidth/2,
-                clientY: window.innerHeight/2,
-                elementCaptured: null
-            },
-            guideClickCapture: {
-                screenWidth: window.innerWidth,
-                screenHeight: window.innerHeight,
-                clientX: window.innerWidth/2,
-                clientY: window.innerHeight/2,
-                elementCaptured: null
-            },
-            currentStep: null,
-            currentTask: null,
-            isGuideStepPopupOpen: false,
-            isRecordStepPopupOpen: false,
-            isGuideActive: false,
-            drawer: {
-                showDrawer: false,
-                showTextArea:false
-            },
-            record: {
-                isRecording: false,
-            },
-            draftTask: {
-                taskId: null,
-                taskName: "",
-                taskRootUrl: null,
-                steps: []
-            },
-            tasks: [
-                {
-                    taskId: "task_1",
-                    taskName: "How to add a new configuration key lksdjf sdkfh dsflih sdfij sdif lsdnfhukuhsdkbsdufh sdofuh osdfh dh ljdfn sdflij fijsdf ijd",
-                    taskRootUrl: "https://dash-e2e.intuit.com/#/widget/CTO-FDS/ProviderConfigurations@1.82.4",
-                    steps: [
-                        {
-                            stepName: "Click on \"Add Configuration Key\" button",
-                            xPath: "/html/body/div/div/div[1]"
-                            // xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Add configuration key details in this form",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div/div/div[2]"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        }
-                    ]
+        let persistedState = localStorage.getItem("selfHelpState");
+        if(persistedState) {
+            this.state = JSON.parse(localStorage.getItem("selfHelpState"));
+        } else {
+            this.state = {
+                recordClickCapture: {
+                    screenWidth: window.innerWidth,
+                    screenHeight: window.innerHeight,
+                    clientX: window.innerWidth/2,
+                    clientY: window.innerHeight/2,
+                    elementCaptured: null
                 },
-                {
-                    taskId: "task_2",
-                    taskName: "How to add a bank transaction",
-                    taskRootUrl: "https://dash-e2e.intuit.com/#/widget/CTO-FDS/ProviderConfigurations@1.82.4",
-                    steps: [
-                        {
-                            stepName: "Click on \"Add Configuration Key\" button",
-                            xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Add configuration key details in this form",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Click on \"Save\" to create the new configuration key",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div[2]/div/div/div/div[3]/button[2]"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        }
-                    ]
+                guideClickCapture: {
+                    screenWidth: window.innerWidth,
+                    screenHeight: window.innerHeight,
+                    clientX: window.innerWidth/2,
+                    clientY: window.innerHeight/2,
+                    elementCaptured: null
                 },
-                {
-                    taskId: "task_3",
-                    taskName: "How to see all your bank accounts",
-                    taskRootUrl: "https://dash-e2e.intuit.com/#/widget/CTO-FDS/ProviderConfigurations@1.82.4",
-                    steps: [
-                        {
-                            stepName: "Click on \"Add Configuration Key\" button",
-                            xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Add configuration key details in this form",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Click on \"Save\" to create the new configuration key",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div[2]/div/div/div/div[3]/button[2]"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        }
-                    ]
+                currentStep: null,
+                currentTask: null,
+                isGuideStepPopupOpen: false,
+                isRecordStepPopupOpen: false,
+                isGuideActive: false,
+                drawer: {
+                    showDrawer: false,
+                    showTextArea:false
                 },
-                {
-                    taskId: "task_4",
-                    taskName: "How to delink a bank from your account",
-                    taskRootUrl: "https://dash-e2e.intuit.com/#/widget/CTO-FDS/ProviderConfigurations@1.82.4",
-                    steps: [
-                        {
-                            stepName: "Click on \"Add Configuration Key\" button",
-                            xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Add configuration key details in this form",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div[2]/div/div/div"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        },
-                        {
-                            stepName: "Click on \"Save\" to create the new configuration key",
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                            xPath: "/html/body/div[2]/div/div/div/div[3]/button[2]"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/div[2]/div/div/button"
-                            // xPath: "/html/body/div[1]/div/div/div[2]/div[2]/div/div[2]"
-                        }
-                    ]
+                record: {
+                    isRecording: false,
+                },
+                draftTask: {
+                    taskId: null,
+                    taskName: "",
+                    taskRootUrl: null,
+                    steps: []
+                },
+                tasks: [],
+                hover: {
+                    hoverAddTaskButton: false,
+                    hoverStartButton:false,
+                    hoverCloseButton: false
+                },
+                screens: {
+                    LIST_OF_WORKFLOWS:"LIST_OF_WORKFLOWS",
+                    DESCRIPTION_OF_WORKFLOW:"DESCRIPTION_OF_WORKFLOW",
+                    CREATE_WORKFLOW:"CREATE_WORKFLOW"
+                },
+                activeScreen: "LIST_OF_WORKFLOWS",
+                inspectModeOn:false,
+                draftStep:{
+                    stepName:'',
+                    xPath:''
                 }
-            ],
-            hover: {
-                hoverAddTaskButton: false,
-                hoverStartButton:false,
-                hoverCloseButton: false
-            },
-            inspectModeOn:false,
-            draftStep:{
-                stepName:'',
-                xPath:''
-            }
-
-        };
+            };
+    
+        }
+        this.stepNameRef = React.createRef();
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
         console.log("componentWillUpdate called");
-        // debugger;
         let nextCurrentTask = nextState.currentTask;
         let nextCurrentStep = nextState.currentStep;
 
@@ -194,14 +99,7 @@ class SelfHelp extends Component {
         let elementBoundingRect = element.getBoundingClientRect();
         let elementBottomLimit = elementBoundingRect.bottom;
         let elementLeftLimit = elementBoundingRect.left;
-        let elementRightLimit = elementBoundingRect.right;
         let elementTopLimit = elementBoundingRect.top;
-
-        // document.getRootNode().body.style.opacity = 0.1;
-        // element.style.setProperty('opacity', 1, 'important');
-        // element.style.setProperty('z-index', 9999, 'important');
-        // document.addEventListener("click", this.eventFunc, true);
-
         // New changes
         let xCoordinateOfPopUp = elementLeftLimit + 20;
         let yCoordinateOfPopUp = elementBottomLimit + 20;
@@ -232,9 +130,28 @@ class SelfHelp extends Component {
           });
     }
 
+    onAddStepClick = (taskNameRef)=> {
+
+        if(taskNameRef.current && taskNameRef.current.value !== "") {
+            if(this.state.draftTask.taskName.trim() === "") {
+                this.setState({
+                    draftTask: {
+                        ...this.state.draftTask,
+                        taskName: taskNameRef.current.value
+                    }
+                });
+            }
+            this.startInspectMode();
+        } else if(this.state.draftTask.steps.length!==0) {
+            this.startInspectMode();
+        } else {
+            alert("Workflow name is empty");
+        }
+    };
+
     getElementByXpath = (path)=> {
         return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    }
+    };
 
     handleDrawerCollapse = () => {
         this.setState({
@@ -243,8 +160,8 @@ class SelfHelp extends Component {
                 ...this.state.drawer,
                 showDrawer: false
             }
-        })
-    }
+        });
+    };
 
     handleSelfHelpClick = () => {
         this.setState({
@@ -254,7 +171,7 @@ class SelfHelp extends Component {
                 showDrawer: true
             }
         });
-    }
+    };
 
     handleTaskPlay = (taskId, e)=> {
         for(let i=0; i< this.state.tasks.length; i++) {
@@ -267,7 +184,7 @@ class SelfHelp extends Component {
                 break;
             }
         }
-    }
+    };
 
     handleNextStepPress = ()=> {
         this.state.guideClickCapture.elementCaptured.click();
@@ -277,7 +194,7 @@ class SelfHelp extends Component {
                     currentStep: this.state.currentStep+1
             });
         }, 200);
-    }
+    };
 
     stopGuide = ()=> {
         if(this.state.guideClickCapture.elementCaptured !== null) {
@@ -297,14 +214,188 @@ class SelfHelp extends Component {
                 isGuideStepPopupOpen: false,
           });
         
-    }
+    };
 
     getStepMessage = ()=> {
         let currentTask = this.state.currentTask;
         let currentStep = this.state.currentStep;
         let message = currentTask!=null?this.state.tasks[currentTask].steps[currentStep].stepName: "";
         return message;
+    };
+
+    guidGenerator = ()=> {
+        let S4 = ()=>  (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    };
+
+    getXPath = (elm)=> {   
+        console.log(elm);
+        if(lastElementHighlighted != null || lastElementHighlightedBGColor != null){
+            lastElementHighlighted.style.backgroundColor = lastElementHighlightedBGColor;
+        }
+        let element = elm.srcElement;
+        let xpath = '';
+        for ( ; element && element.nodeType === 1; element = element.parentNode )
+        {
+            //alert(element);
+            let id = $(element.parentNode).children(element.tagName).index(element) + 1;
+            // let id = 22;
+            id > 1 ? (id = '[' + id + ']') : (id = '');
+            xpath = '/' + element.tagName.toLowerCase() + id + xpath;
+        }
+        console.log(xpath);
+         //highlight the element
+         let elementToBeHighlighted = this.getElementByXpath(xpath);
+         lastRecordedXPath = xpath;
+         lastElementHighlighted = elementToBeHighlighted;
+         lastElementHighlightedBGColor = elementToBeHighlighted.style.backgroundColor;
+         elementToBeHighlighted.style.backgroundColor = this.props.inspectorColor;  
+    };
+
+    startInspectMode=()=>{
+        console.info("InspectMode ON")
+        document.addEventListener('mouseover', this.getXPath);
+        document.addEventListener('click', this.handleInspectorSelectedElement, true);
+        document.documentElement.style.cursor = 'crosshair';
+        this.setState({
+            inspectModeOn:true,
+            drawer: {
+                ...this.state.drawer,
+                showDrawer: false
+            }
+        });
+    };
+    
+    stopInspectMode=()=>{
+        console.info("InspectMode OFF");
+        document.removeEventListener('mouseover', this.getXPath);
+        document.removeEventListener('click', this.handleInspectorSelectedElement, true);
+        document.documentElement.style.cursor = 'default';
+        this.setState({
+            inspectModeOn:false
+        });
+    };
+
+    handleInspectorSelectedElement=(e)=>{
+        this.stopInspectMode();
+        e.stopPropagation();
+        let element = this.getElementByXpath(lastRecordedXPath);
+        if(this.state.recordClickCapture.elementCaptured) {
+            this.state.recordClickCapture.elementCaptured.style.setProperty('box-shadow', 'none');
+        }
+        element.style.boxShadow = "0 0 0 1px " + this.props.highlightColor + ", 0 0 0 8px " + this.props.highlightColor;
+        let elementBoundingRect = element.getBoundingClientRect();
+        let elementBottomLimit = elementBoundingRect.bottom;
+        let elementLeftLimit = elementBoundingRect.left; 
+        let elementTopLimit = elementBoundingRect.top;
+        // New changes
+        let xCoordinateOfPopUp = elementLeftLimit + 20;
+        let yCoordinateOfPopUp = elementBottomLimit + 20;
+        // As MaxHeightOfPopU=150
+        if(yCoordinateOfPopUp+150>this.state.recordClickCapture.screenHeight)
+            yCoordinateOfPopUp = elementTopLimit-20-150;
+        // As MaxWidthofPopUp=300
+        if(xCoordinateOfPopUp+300>this.state.recordClickCapture.screenWidth){
+            var diff = (xCoordinateOfPopUp+300)-this.state.recordClickCapture.screenWidth
+            xCoordinateOfPopUp = xCoordinateOfPopUp-diff-20;
+        }
+        this.setState({
+            recordClickCapture: {
+                clientX: xCoordinateOfPopUp,
+                clientY: yCoordinateOfPopUp,
+                screenWidth: this.state.recordClickCapture.screenWidth,
+                screenHeight: this.state.recordClickCapture.screenHeight,
+                elementCaptured: element
+            },
+            isGuideStepPopupOpen: false,
+            isRecordStepPopupOpen: true,
+            isGuideActive: true,
+            drawer: {
+                ...this.state.drawer,
+                showDrawer: false
+            },
+            draftStep:{
+                ...this.state.draftStep,
+                xPath:lastRecordedXPath
+            }
+          });
+    };
+
+    handleAddTask = ()=> {
+        let tempDraftTask = this.state.draftTask;
+        tempDraftTask['taskId'] = this.guidGenerator();
+        tempDraftTask['taskRootUrl'] = window.location.href;
+        this.setState({
+            activeScreen:this.state.screens.CREATE_WORKFLOW,
+            draftTask: tempDraftTask
+        });
+    };
+
+    handleAddStep = ()=> {
+        if(this.stepNameRef.current.value.length !==0) {
+            let draftStep = {
+                stepName: this.stepNameRef.current.value,
+                xPath: lastRecordedXPath
+            }
+            // open the right fixed panel
+            // populate the steps 
+            this.state.recordClickCapture.elementCaptured.style.setProperty("box-shadow", "none");
+            if(lastElementHighlighted != null || lastElementHighlightedBGColor != null){
+                lastElementHighlighted.style.backgroundColor = lastElementHighlightedBGColor;
+            }
+            this.setState({
+                isRecordStepPopupOpen: false,
+                drawer: {
+                    ...this.state.drawer,
+                    showDrawer: true
+                },
+                draftTask:{
+                    ...this.state.draftTask,
+                    steps: [...this.state.draftTask.steps, draftStep]
+                },
+                draftStep:{
+                    stepName:'',
+                    xPath:''
+                },
+            }, ()=> {
+                console.log(this.state.draftTask);
+            })
+            let element = this.getElementByXpath(lastRecordedXPath);
+            element.click();
+        } else {
+            alert("Please fill step description");
+        }
+    };
+
+    handleCancelClick = ()=> {
+        this.setState({
+            activeScreen: this.state.screens.LIST_OF_WORKFLOWS
+        })
     }
+
+    handleFinishTask = ()=> {
+        //store it in tasks array
+        if(this.state.draftTask.taskName === ""){
+            alert("Workflow name must be entered");
+        }else if(this.state.draftTask.steps.length == 0){
+            alert("Atleast one step is required to create a workflow");
+        }else{
+            var tempTasks = [...this.state.tasks];
+            tempTasks.push(this.state.draftTask);
+            this.setState({ 
+                activeScreen : this.state.screens.LIST_OF_WORKFLOWS,
+                tasks: tempTasks,
+                draftTask:{
+                    taskId: null,
+                    taskName: "",
+                    taskRootUrl: null,
+                    steps: []
+                }
+            }, ()=> {
+                // localStorage.setItem("selfHelpState", JSON.stringify(this.state));
+            });
+        }
+    };
 
     render() {
         return (
@@ -316,58 +407,60 @@ class SelfHelp extends Component {
                     <div className={styles.widgetTextContainer}>SELF-HELP</div>
                 </div>
                  : 
-                 <Drawer activeScreen="LIST_OF_WORKFLOWS" tasks={this.state.tasks} handleTaskPlay={this.handleTaskPlay}
-                 handleDrawerCollapse={this.handleDrawerCollapse}></Drawer>
+                 <Drawer activeScreen={this.state.activeScreen} tasks={this.state.tasks} handleTaskPlay={this.handleTaskPlay}
+                 handleDrawerCollapse={this.handleDrawerCollapse} screens={this.state.screens} handleAddTask={this.handleAddTask}
+                 draftTask={this.state.draftTask} draftStep={this.state.draftStep} startInspectMode={this.startInspectMode} 
+                 handleFinishTask={this.handleFinishTask} onAddStepClick={this.onAddStepClick} handleCancelClick={this.handleCancelClick}></Drawer>
                 }
 
-                
                 {/* Guide-Popup */}
-                <Popup isGuideStepPopupOpen={this.state.isGuideStepPopupOpen} guideClickCapture={this.state.guideClickCapture}>
+                {
+                this.state.isGuideStepPopupOpen && 
+                <Popup clickCapture={this.state.guideClickCapture}>
                     {this.getStepMessage()}
-
                     <div className={styles.PopupButtonContainer}>
                     {/* SKIP Button */}
-                        {/* <div style={{backgroundColor: '#fff', color: 'hsl(52, 80%, 50%)', width: '45%', display: 'flex', justifyContent: 'center'}} onClick={this.stopGuide}>SKIP</div>  */}
-
-                        <Button
-                            variant="light"
-                            className={styles.ButtonContainer}
-                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 16}}
-                            onClick={{}}>
-                            SKIP
-                            <i className="fa fa-stop-circle" style={{color: this.props.themeColor, marginLeft: 3, fontSize: 16}}/>
-
+                        <Button variant="link" className={styles.ButtonContainer}
+                            style={{color: '#fff', minWidth: 70, fontWeight: 'bold', fontSize: 16, textDecoration: 'underline', outline: 'none'}} onClick={this.stopGuide}>
+                            Skip
                         </Button>
 
                         {this.state.currentStep && this.state.currentStep === this.state.tasks[this.state.currentTask].steps.length-1?
                     // FINISH Button
-                        // <div style={{backgroundColor: '#fff', color: 'hsl(52, 80%, 50%)', width: '45%', display: 'flex', justifyContent: 'center'}} onClick={this.stopGuide}>FINISH</div> 
-                        <Button
-                        variant="light"
-                        className={styles.ButtonContainer}
-                        style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold'}}
-                        onClick={{}}>
-                        FINISH
-                    </Button>    
+                        <Button variant="light" className={styles.ButtonContainer}
+                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 16, outline: 'none'}} onClick={this.stopGuide}>
+                            Finish
+                            <i className="fa fa-check-circle" style={{color: this.state.theme, marginLeft: 3, fontSize: 16}}/>
+                        </Button>    
                         :
                     // NEXT Button
-                        // <div style={{backgroundColor: '#fff', color: 'hsl(52, 80%, 50%)', width: '45%', display: 'flex', justifyContent: 'center'}} onClick={this.handleNextStepPress}>NEXT</div>
                         <Button
-                        id="next"
-                        variant="light"
-                        className={styles.ButtonContainer}
-                        style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold'}}
-                        onClick={this.handleNextStepPress}>
-                        NEXT   
-                        <i className="fa fa-angle-right" style={{color: this.state.theme, marginLeft: 3, fontSize: 16}}/>
-                    </Button>
+                            variant="light" className={styles.ButtonContainer}
+                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 16, outline: 'none'}} onClick={this.handleNextStepPress}>
+                            Next   
+                            <i className="fa fa-angle-right" style={{color: this.state.theme, marginLeft: 4, fontSize: 16}}/>
+                        </Button>
                     }
                     </div>
                 </Popup>
+                }
+
+                {/* Record Step popover */}
+                {
+                    this.state.isRecordStepPopupOpen &&
+                <Popup clickCapture={this.state.recordClickCapture}>
+                    <Form.Group controlId="newTaskName">
+                        <Form.Label style={{textDecorationLine: 'underline', fontSize: 15, fontWeight: 'bold'}}>Step Description</Form.Label>
+                        <Form.Control as="textarea" ref={this.stepNameRef} rows="2"/>
+                    </Form.Group>
+                    <Button variant="light" style={{backgroundColor: '#4a90e2'}} size="sm" onClick={this.handleAddStep}>
+                        <i className="fa fa-plus" style={{fontSize:'13px', marginRight: 4}}></i>
+                        <span style={{fontSize: 14, fontWeight: 'bold', color: '#fff'}}>ADD STEP</span>
+                    </Button>
+                </Popup>
+                }
             </div>
         )
     }
-
 }
-
 export default SelfHelp;

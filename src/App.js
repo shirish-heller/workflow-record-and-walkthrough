@@ -13,7 +13,7 @@ function App() {
         This is the guide element 2
       </div>
       {/* <SelfHelp/> */}
-      <SelfHelp themeColor="#FFC45E" highlightColor="#FFC45E"></SelfHelp>
+      <SelfHelp themeColor="#FFC45E" highlightColor="#FFC45E" inspectorColor="#c1f0f6"></SelfHelp>
 
     </div>
   );

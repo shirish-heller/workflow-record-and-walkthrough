@@ -4,11 +4,8 @@ import styles from './Popup.module.css';
 export const Popup = (props)=> {
     return (
         <div className={styles.Container} style={{
-            display: props.isGuideStepPopupOpen? 'flex': 'none',
-            left: props.guideClickCapture.clientX,
-            top:  props.guideClickCapture.clientY
-
-
+            left: props.clickCapture.clientX,
+            top:  props.clickCapture.clientY
             }}>
             {props.children}
         </div>

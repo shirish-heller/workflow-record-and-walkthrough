@@ -1,18 +1,17 @@
 .DrawerContainer {
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.7);
-    min-width: 250px;
+    background-color: rgba(255, 255, 255, 0.8);
+    min-width: 300px;
     padding: 4px;
     position: fixed;
-    right: -5px;
+    right: 1px;
     top: 35%;
     align-content: center;
     justify-content: center;
     border-radius: 10px;
     border: 4px solid #FFC45E;
     z-index:9999;
-    resize: both;
     overflow: auto;
 }
 
@@ -36,4 +35,46 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    outline: none;
+}
+
+.AddStepContainer {
+
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.AddStepButton {
+    border: 1px dashed #85bf31;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 2px;
+    color: #85bf31;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.AddStepButton:hover {
+    background-color: #85bf31;
+    color: #fff;
+}
+
+.AddTaskButton {
+    display: flex;
+    align-items: 'center';
+    justify-content: center;
+    /* border: 2px solid #85bf31; */
+    border-radius: 15;
+    /* background-color: #85bf31; */
+    height:25;
+    width:25
 }

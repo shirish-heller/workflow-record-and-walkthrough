@@ -1,15 +1,12 @@
 .container {
-    /* color: red; */
     display: flex;
     flex-direction: column;
 }
 
 .widget {
-    /* background-color: #FFB64C; */
     min-width: 140px;
     max-width: 200px;
     padding: 4;
-    /* background-color: this.props.themeColor; */
     display: flex;
     flex-direction: row;
     position: fixed;
@@ -18,7 +15,6 @@
     transform: rotate(90deg);
     align-content: center;
     justify-content: center;
-    /* border: 1px solid red; */
     border-radius: 6px;
     padding: 5px;
     padding-top: 3px;
@@ -48,13 +44,11 @@
     padding: 2px;
 }
 
-.ButtonContainer:hover {
-    cursor: pointer;
-}
-
 .PopupButtonContainer {
     display: flex;
     flex-direction: row;
+    padding-top: 5px;
+    border-top: 1px solid #fff;
     justify-content: space-evenly;
     margin-top: 10px;
     margin-bottom: 5px;
