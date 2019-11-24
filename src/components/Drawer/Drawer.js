@@ -53,7 +53,7 @@ class Drawer extends Component {
                             <div className={styles.AddStepContainer}>
                                       <Form.Group controlId="newTaskName">
                                         <Form.Label style={{textDecorationLine: 'underline', fontSize: 13}}>Workflow Name</Form.Label>
-                                        <Form.Control as="textarea" ref={this.taskNameRef} rows="2"/>
+                                        <Form.Control as="textarea" ref={this.taskNameRef} rows="2" disabled={this.props.draftTask.taskName.trim()===""?false: true} value={this.props.draftTask.taskName.trim()===""?null:this.props.draftTask.taskName.trim()}/>
                                     </Form.Group>
                                 <Form.Label style={{textDecorationLine: 'underline', fontSize: 13}}>Steps</Form.Label>
     

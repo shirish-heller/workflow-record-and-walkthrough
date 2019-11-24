@@ -363,7 +363,13 @@ class SelfHelp extends Component {
 
     handleCancelClick = ()=> {
         this.setState({
-            activeScreen: this.state.screens.LIST_OF_WORKFLOWS
+            activeScreen: this.state.screens.LIST_OF_WORKFLOWS,
+            draftTask: {
+                taskId: null,
+                taskName: "",
+                taskRootUrl: null,
+                steps: []
+            },
         })
     }
 
