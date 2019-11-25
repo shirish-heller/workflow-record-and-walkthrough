@@ -1,7 +1,7 @@
 {
   "name": "self-help",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "jquery": "3.4.1",
     "lodash": "^4.17.15",
