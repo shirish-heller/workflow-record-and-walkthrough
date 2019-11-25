@@ -69,7 +69,6 @@ class SelfHelp extends Component {
     }
 
     UNSAFE_componentWillUpdate(nextProps, nextState) {
-        console.log("componentWillUpdate called");
         let nextCurrentTask = nextState.currentTask;
         let nextCurrentStep = nextState.currentStep;
 
@@ -357,7 +356,7 @@ class SelfHelp extends Component {
             let element = this.getElementByXpath(lastRecordedXPath);
             element.click();
         } else {
-            alert("Please fill step description");
+            window.confirm("Please fill step description");
         }
     };
 
@@ -374,7 +373,7 @@ class SelfHelp extends Component {
     }
 
     deleteStep = (index)=> {
-        console.log(index + " item will be deleted")
+        console.log("step-" + index + " will be deleted")
         let tempSteps = this.state.draftTask.steps;
         tempSteps.splice(index,1);
         this.setState({
@@ -386,7 +385,7 @@ class SelfHelp extends Component {
     }
 
     handleDeleteTask = (index)=> {
-        console.log(index + " item will be deleted")
+        console.log("Task-" + index + " will be deleted")
         let tempTasks = this.state.tasks;
         tempTasks.splice(index,1);
         this.setState({
@@ -398,7 +397,7 @@ class SelfHelp extends Component {
         //store it in tasks array
         if(this.state.draftTask.taskName === ""){
             alert("Workflow name must be entered");
-        }else if(this.state.draftTask.steps.length == 0){
+        }else if(this.state.draftTask.steps.length === 0){
             alert("Atleast one step is required to create a workflow");
         }else{
             var tempTasks = [...this.state.tasks];
@@ -412,8 +411,6 @@ class SelfHelp extends Component {
                     taskRootUrl: null,
                     steps: []
                 }
-            }, ()=> {
-                // localStorage.setItem("selfHelpState", JSON.stringify(this.state));
             });
         }
     };
