@@ -9,9 +9,10 @@
     "type": "git",
     "url": "git://github.com/shirish-heller/workflow-record-and-walkthrough.git"
   },
-  "main": "./public/index.js",
+  "main": "./lib/SelfHelp.js",
   "private": false,
   "dependencies": {
+    "@babel/runtime": "^7.7.4",
     "jquery": "3.4.1",
     "lodash": "^4.17.15",
     "lodash.template": "^4.5.0",
@@ -23,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,20 +43,30 @@
       "last 1 safari version"
     ]
   },
-    "keywords": [
-      "self-help",
-      "product-tour",
-      "guide",
-      "walkthrough",
-      "tour",
-      "react",
-      "tutorial",
-      "step-by-step",
-      "intro",
-      "product-intro",
-      "react-component"
-    ],
+  "keywords": [
+    "self-help",
+    "product-tour",
+    "guide",
+    "walkthrough",
+    "tour",
+    "react",
+    "tutorial",
+    "step-by-step",
+    "intro",
+    "product-intro",
+    "react-component"
+  ],
   "devDependencies": {
-    "react-bootstrap": "^1.0.0-beta.14"
+    "babel-core": "^6.21.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^3.2.0",
+    "path": "^0.12.7",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }

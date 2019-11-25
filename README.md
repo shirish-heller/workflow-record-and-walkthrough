@@ -9,7 +9,8 @@ Forget diving into code and creating unmanagable config files. Use our workflow 
 ## How to Use
 
 1) ```npm install workflow-record-and-walkthrough```
-2) Create workflow using the record functionality.
-3) users can see the workflow you created and play on it to start a UI Guide and guide them step by step through the entire process.
-4) Done. :)
+2) add this in App.js ```<SelfHelp themeColor="#FFC45E" highlightColor="#FFC45E" inspectorColor="#c1f0f6"></SelfHelp>```
+3) Create workflow using the record functionality.
+4) users can see the workflow you created and play on it to start a UI Guide and guide them step by step through the entire process.
+5) Done. :)
 
