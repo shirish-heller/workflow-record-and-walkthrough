@@ -1,6 +1,15 @@
 {
   "name": "workflow-record-and-walkthrough",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "author": {
+    "name": "Shivansh Rajolia (shirish-heller)",
+    "url": "https://github.com/shirish-heller"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shirish-heller/workflow-record-and-walkthrough.git"
+  },
+  "main": "./public/index.js",
   "private": false,
   "dependencies": {
     "jquery": "3.4.1",
@@ -33,6 +42,19 @@
       "last 1 safari version"
     ]
   },
+    "keywords": [
+      "self-help",
+      "product-tour",
+      "guide",
+      "walkthrough",
+      "tour",
+      "react",
+      "tutorial",
+      "step-by-step",
+      "intro",
+      "product-intro",
+      "react-component"
+    ],
   "devDependencies": {
     "react-bootstrap": "^1.0.0-beta.14"
   }
