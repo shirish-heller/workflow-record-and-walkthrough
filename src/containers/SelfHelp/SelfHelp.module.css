@@ -23,7 +23,6 @@
 
 .widget:hover {
     cursor: pointer;
-    background-color: red;
 }
 
 .widgetTextContainer {

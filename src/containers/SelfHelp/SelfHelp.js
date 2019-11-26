@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styles from './SelfHelp.module.css';
 import { Popup } from '../../components/Popup/Popup';
-import {
-    Button, Form
-} from 'react-bootstrap';
+// import {
+//     Button, Form
+// } from 'react-bootstrap';
+import Button from '../../components/Button/Button';
 import $ from 'jquery';
 import Drawer from '../../components/Drawer/Drawer';
 
@@ -35,8 +36,7 @@ class SelfHelp extends Component {
                 isRecordStepPopupOpen: false,
                 isGuideActive: false,
                 drawer: {
-                    showDrawer: false,
-                    showTextArea:false
+                    showDrawer: false
                 },
                 record: {
                     isRecording: false,
@@ -69,6 +69,9 @@ class SelfHelp extends Component {
     }
 
     UNSAFE_componentWillUpdate(nextProps, nextState) {
+        console.log("component will update called v1");
+        console.log("updated state is :- ");
+        console.log(nextState);
         let nextCurrentTask = nextState.currentTask;
         let nextCurrentStep = nextState.currentStep;
 
@@ -79,6 +82,7 @@ class SelfHelp extends Component {
                 this.handleStepChange(nextState.currentTask, nextState.currentStep);
             }
         }
+        console.log("Fine 1");
     }
 
     handleStepChange = (taskIndex = 0, stepIndex = 0)=> {
@@ -117,7 +121,6 @@ class SelfHelp extends Component {
             isGuideStepPopupOpen: true,
             isGuideActive: true,
             drawer: {
-                ...this.state.drawer,
                 showDrawer: false
             }
           });
@@ -150,17 +153,16 @@ class SelfHelp extends Component {
         this.setState({
             ...this.state,
             drawer: {
-                ...this.state.drawer,
                 showDrawer: false
             }
         });
     };
 
     handleSelfHelpClick = () => {
+        console.log(this.state);
         this.setState({
             ...this.state,
             drawer: {
-                ...this.state.drawer,
                 showDrawer: true
             }
         });
@@ -253,7 +255,6 @@ class SelfHelp extends Component {
         this.setState({
             inspectModeOn:true,
             drawer: {
-                ...this.state.drawer,
                 showDrawer: false
             }
         });
@@ -304,7 +305,6 @@ class SelfHelp extends Component {
             isRecordStepPopupOpen: true,
             isGuideActive: true,
             drawer: {
-                ...this.state.drawer,
                 showDrawer: false
             },
             draftStep:{
@@ -339,7 +339,6 @@ class SelfHelp extends Component {
             this.setState({
                 isRecordStepPopupOpen: false,
                 drawer: {
-                    ...this.state.drawer,
                     showDrawer: true
                 },
                 draftTask:{
@@ -369,11 +368,11 @@ class SelfHelp extends Component {
                 taskRootUrl: null,
                 steps: []
             },
-        })
-    }
+        });
+    };
 
     deleteStep = (index)=> {
-        console.log("step-" + index + " will be deleted")
+        console.log("step-" + index + " will be deleted");
         let tempSteps = this.state.draftTask.steps;
         tempSteps.splice(index,1);
         this.setState({
@@ -420,6 +419,7 @@ class SelfHelp extends Component {
             <div className={styles.container}>
                 
                 {/* Drawer and SelfHelp widget */}
+                {console.log(this.state.drawer.showDrawer)}
                 {!this.state.drawer.showDrawer? 
                 <div className={styles.widget} style={{backgroundColor: this.props.themeColor}} onClick={this.handleSelfHelpClick}>
                     <div className={styles.widgetTextContainer}>SELF-HELP</div>
@@ -439,25 +439,25 @@ class SelfHelp extends Component {
                     <span style={{fontSize: 15}}>{this.getStepMessage()}</span>
                     <div className={styles.PopupButtonContainer}>
                     {/* SKIP Button */}
-                        <Button variant="link" className={styles.ButtonContainer}
+                        <Button className={styles.ButtonContainer}
                             style={{color: '#fff', minWidth: 70, fontWeight: 'bold', fontSize: 14, textDecoration: 'underline', outline: 'none'}} onClick={this.stopGuide}>
                             Skip
                         </Button>
 
                         {this.state.currentStep!==null && this.state.currentStep === (this.state.tasks[this.state.currentTask].steps.length)-1?
                     // FINISH Button
-                        <Button variant="light" className={styles.ButtonContainer}
+                        <Button className={styles.ButtonContainer}
                             style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.stopGuide}>
                             Finish
-                            <i className="fa fa-check-circle" style={{color: this.state.theme, marginLeft: 3, fontSize: 16}}/>
+                            {/* <i className="fa fa-check-circle" style={{color: this.state.theme, marginLeft: 3, fontSize: 16}}/> */}
                         </Button>    
                         :
                     // NEXT Button
                         <Button
                             variant="light" className={styles.ButtonContainer}
                             style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.handleNextStepPress}>
-                            Next   
-                            <i className="fa fa-angle-right" style={{color: this.state.theme, marginLeft: 4, fontSize: 16}}/>
+                            Next >
+                            {/* <i className="fa fa-angle-right" style={{color: this.state.theme, marginLeft: 4, fontSize: 16}}/> */}
                         </Button>
                     }
                     </div>
@@ -468,13 +468,13 @@ class SelfHelp extends Component {
                 {
                     this.state.isRecordStepPopupOpen &&
                 <Popup clickCapture={this.state.recordClickCapture}>
-                    <Form.Group controlId="newTaskName">
-                        <Form.Label style={{textDecorationLine: 'underline', fontSize: 15, fontWeight: 'bold'}}>Step Description</Form.Label>
-                        <Form.Control as="textarea" ref={this.stepNameRef} rows="2"/>
-                    </Form.Group>
+                    {/* <Form.Group controlId="newTaskName"> */}
+                        <span style={{textDecorationLine: 'underline', fontSize: 15, fontWeight: 'bold'}}>Step Description</span>
+                        <textarea ref={this.stepNameRef} rows="2"/>
+                    {/* </Form.Group> */}
                     <Button variant="light" style={{backgroundColor: '#4a90e2'}} size="sm" onClick={this.handleAddStep}>
-                        <i className="fa fa-plus" style={{fontSize:'13px', marginRight: 4}}></i>
-                        <span style={{fontSize: 14, fontWeight: 'bold', color: '#fff'}}>ADD STEP</span>
+                        {/* <i className="fa fa-plus" style={{fontSize:'13px', marginRight: 4}}></i> */}
+                        <span style={{fontSize: 14, fontWeight: 'bold', color: '#fff'}}>+ ADD STEP</span>
                     </Button>
                 </Popup>
                 }

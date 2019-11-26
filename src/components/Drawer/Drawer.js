@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styles from './Drawer.module.css';
-import {
-    Button, Form
-} from 'react-bootstrap';
+import Button from '../Button/Button';
 import { TaskList } from '../TaskList/TaskList';
 
 class Drawer extends Component {
@@ -10,18 +8,21 @@ class Drawer extends Component {
     constructor(props) {
         super(props);
         this.taskNameRef = React.createRef();
+        console.log("Drawer constructor");
     }
 
     render() {
         return (
             <div className={styles.DrawerContainer}>
+                {console.log(this.props)}
                 <div style={{display: 'flex', flexDirection: 'column', padding:'5px', borderRadius: 10}}>
                     {/* Top Title Banner + Add Task Button */}
                     <div className={styles.TitleBanner}>
                         {/* Collapse Button */}
                         <div style={{display: 'flex', flex: 20}}>
-                            <Button variant="light" className={styles.ButtonContainer} onClick={this.props.handleDrawerCollapse}>
-                                <i className="fa fa-minus" style={{color: '#000'}}/>
+                            <Button variant="light" className={styles.ButtonContainer} style={{backgroundColor: '#fff', borderRadius: '50px'}} onClick={this.props.handleDrawerCollapse}>
+                                {/* <i className="fa fa-minus" style={{color: '#000'}}/> */}
+                                <span style={{fontSize: 22, color: '#000', fontWeight: 'bold'}}>-</span>
                             </Button>
                         </div>
                         <div style={{display: 'flex', flex: 60, justifyContent: 'center'}}>
@@ -34,8 +35,9 @@ class Drawer extends Component {
                         {
                             this.props.activeScreen === this.props.screens.LIST_OF_WORKFLOWS &&
                             <div className={styles.AddTaskButton}>
-                                <Button variant="warning" className={styles.ButtonContainer} onClick={this.props.handleAddTask}>
-                                    <i className="fa fa-plus" style={{color: '#fff'}}/>
+                                <Button className={styles.ButtonContainer} style={{borderRadius: '50px'}} onClick={this.props.handleAddTask}>
+                                    {/* <i className="fa fa-plus" style={{color: '#fff'}}/> */}
+                                    <span style={{fontSize: 22, color: '#fff', fontWeight: 'bold'}}>+</span>
                                 </Button>
                             </div>
                         }
@@ -51,11 +53,11 @@ class Drawer extends Component {
                     {
                             this.props.activeScreen === this.props.screens.CREATE_WORKFLOW &&
                             <div className={styles.AddStepContainer}>
-                                      <Form.Group controlId="newTaskName">
-                                        <Form.Label style={{textDecorationLine: 'underline', fontSize: 13}}>Workflow Name</Form.Label>
-                                        <Form.Control as="textarea" ref={this.taskNameRef} rows="2" disabled={this.props.draftTask.taskName.trim()===""?false: true} value={this.props.draftTask.taskName.trim()===""?null:this.props.draftTask.taskName.trim()}/>
-                                    </Form.Group>
-                                <Form.Label style={{textDecorationLine: 'underline', fontSize: 13}}>Steps</Form.Label>
+                                      {/* <Form.Group controlId="newTaskName"> */}
+                                        <span style={{textDecorationLine: 'underline', fontSize: 13}}>Workflow Name</span>
+                                        <textarea as="textarea" ref={this.taskNameRef} rows="2" disabled={this.props.draftTask.taskName.trim()===""?false: true} value={this.props.draftTask.taskName.trim()===""?null:this.props.draftTask.taskName.trim()}/>
+                                    {/* </Form.Group> */}
+                                <span style={{textDecorationLine: 'underline', fontSize: 13}}>Steps</span>
     
                                 {
                                     this.props.draftTask.steps.map((step,index) => {
@@ -69,10 +71,10 @@ class Drawer extends Component {
                                     )
                                     })
                                 }
-                                <Button variant="light" className={styles.AddStepButton} size="sm" onClick={()=> this.props.onAddStepClick(this.taskNameRef)}>
+                                <button variant="light" className={styles.AddStepButton} size="sm" onClick={()=> this.props.onAddStepClick(this.taskNameRef)}>
                                     <i className="fa fa-plus" style={{fontSize:'13px', marginRight: 4}}></i>
                                     Add New Step
-                                </Button>
+                                </button>
                                 <br/>
                                 <div style={{alignItems: 'center', display:'flex',flex:1,justifyContent:'space-between'}}>
                                     <Button variant="light" size="sm" onClick={this.props.handleCancelClick}>

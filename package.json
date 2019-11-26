@@ -2,29 +2,36 @@
   "name": "workflow-record-and-walkthrough",
   "version": "1.0.4",
   "author": {
-    "name": "Shivansh Rajolia (shirish-heller)",
+    "name": "Shivansh Rajolia",
     "url": "https://github.com/shirish-heller"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/shirish-heller/workflow-record-and-walkthrough.git"
   },
-  "main": "./lib/SelfHelp.js",
+  "main": "build/index.js",
+  "module": "./dist/index.js",
+  "license": "ISC",
   "private": false,
+  "peerDependencies": {
+    "react": "^16.12.0"
+  },
   "dependencies": {
-    "@babel/runtime": "^7.7.4",
+    "bootstrap": "^4.3.1",
     "jquery": "3.4.1",
     "lodash": "^4.17.15",
     "lodash.template": "^4.5.0",
     "mixin-deep": "^2.0.1",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-scripts": "3.2.0",
     "set-value": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack --mode=production",
+    "build": "webpack",
+    "build-dev": "rimraf dist && NODE_ENV=production babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -66,7 +73,6 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "path": "^0.12.7",
-    "react-bootstrap": "^1.0.0-beta.16",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"

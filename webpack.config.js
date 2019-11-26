@@ -1,12 +1,12 @@
 var path = require('path');
 
 module.exports = {
-    mode: 'production',
+    // mode: 'production',
     devtool: 'source-map',
-    entry: './src/containers/SelfHelp/SelfHelp.js',
+    entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'lib'),
-        filename: 'SelfHelp.js',
+        path: path.resolve(__dirname, 'build'),
+        filename: 'index.js',
         libraryTarget: 'commonjs2'
     },
     module: {
@@ -19,7 +19,7 @@ module.exports = {
             }
           },
             {
-                test: /\.css$/i,
+                test: /\.module.css$/i,
                 exclude: /node_modules/,
                 use: [
                   'style-loader',
