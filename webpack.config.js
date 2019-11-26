@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = {
     mode: 'production',
+    devtool: 'source-map',
     entry: './src/containers/SelfHelp/SelfHelp.js',
     output: {
         path: path.resolve(__dirname, 'lib'),
@@ -10,11 +11,13 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules)/,
-                use: 'babel-loader'
-            },
+          {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader'
+            }
+          },
             {
                 test: /\.css$/i,
                 exclude: /node_modules/,
@@ -29,5 +32,6 @@ module.exports = {
                 ],
               },
         ]
-    }
+    },
+
 };
