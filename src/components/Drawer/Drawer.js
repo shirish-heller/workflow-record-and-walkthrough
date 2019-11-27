@@ -27,7 +27,7 @@ class Drawer extends Component {
                     <div className={styles.TitleBanner}>
                         {/* Collapse Button */}
                         <div style={{display: 'flex', flex: 20}}>
-                            <Button variant="light" className={styles.ButtonContainer} style={{backgroundColor: '#fff', borderRadius: '50px', height: '35px', width: '35px'}} onClick={this.props.handleDrawerCollapse}>
+                            <Button variant="light" className={styles.ButtonContainer} style={{backgroundColor: '#fff', borderRadius: '50px', height: '38px', width: '38px'}} onClick={this.props.handleDrawerCollapse}>
                                 <span style={{fontSize: 22, color: '#000', fontWeight: 'bold'}}>&#x2212;</span>
                             </Button>
                         </div>

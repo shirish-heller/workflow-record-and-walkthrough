@@ -464,7 +464,7 @@ class SelfHelp extends Component {
                 <Popup clickCapture={this.state.recordClickCapture}>
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                         <span style={{textDecorationLine: 'underline', fontSize: 15, fontWeight: 'bold', marginBottom: 5}}>Step Description</span>
-                        <textarea ref={this.stepNameRef} style={{marginBottom: 5}} rows="2"/>
+                        <textarea ref={this.stepNameRef} style={{marginBottom: 5, color: '#000'}} rows="2"/>
                         <Button variant="light" style={{backgroundColor: '#4a90e2'}} size="sm" onClick={this.handleAddStep}>
                             <span style={{fontSize: 14, fontWeight: 'bold', color: '#fff'}}>+ ADD STEP</span>
                         </Button>

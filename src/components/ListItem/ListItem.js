@@ -9,7 +9,7 @@ export const ListItem = (props)=> {
             {console.log(props)}
             {/* Task Name */}
             <div className={styles.TaskNameContainer}>
-                <span style={{marginRight: 5, fontSize: 15, fontWeight: 'bold'}}>&#x2192;</span>
+                <span style={{marginRight: 5, fontSize: 15, fontWeight: 'bold', marginBottom: 1}}>&#x2192;</span>
                 <span style={{textAlign: 'left'}}>{props.item.taskName}</span>
             </div>
 
