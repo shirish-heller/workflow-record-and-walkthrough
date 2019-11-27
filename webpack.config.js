@@ -1,5 +1,6 @@
 var path = require('path');
-
+const cssModuleRegex = /\.module\.css$/;
+const cssRegex = /\.css$/;
 module.exports = {
     // mode: 'production',
     devtool: 'source-map',
@@ -19,7 +20,7 @@ module.exports = {
             }
           },
             {
-                test: /\.module.css$/i,
+                test: cssModuleRegex,
                 exclude: /node_modules/,
                 use: [
                   'style-loader',
@@ -30,7 +31,8 @@ module.exports = {
                     },
                   },
                 ],
-              },
+              }
+
         ]
     },
 

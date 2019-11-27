@@ -10,7 +10,7 @@ const Button = (props)=> {
             {props.label}
             {props.children}
             
-        </button>
+      </button>
     );
 }
 

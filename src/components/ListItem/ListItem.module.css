@@ -8,6 +8,7 @@
     padding-right: 2px;
     border-bottom: 1px solid #ccc;
     color: #666;
+    margin-bottom: 10px;
 }
 
 .TaskNameContainer {
@@ -15,6 +16,7 @@
     flex-direction: row;
     justify-content: flex-start;
     flex:0.8;
+    margin-left: 10px;
 }
 .actionsContainer {
     display: flex;
@@ -24,25 +26,33 @@
     margin-left: 4px;
     padding-left: 4;
     flex:0.2;
+    padding-bottom: 5px;
 
 }
 
 .ButtonContainer {
-    /* border-radius: 50px; */
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
 }
 
-.Play {
-    padding-top: 2;
-    margin-right: 5;
+.Icon {
+    font-size: 16px;
+}
+
+.Icon:hover,
+.Icon:focus {
+  /* box-shadow: inset 0 0 0 2em #FFC45E; */
+  filter: brightness(115%);
+  cursor: pointer;
+}
+
+.SuccessButton {
     color: #85bf31;
 }
 
-.Delete {
-    padding-top: 2;
-    margin-right: 5;
+.DangerButton {
     color: #DB524B;
 }

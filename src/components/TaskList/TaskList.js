@@ -3,7 +3,7 @@ import { ListItem } from '../ListItem/ListItem';
 
 export const TaskList = (props)=> {
     return (
-            <div style={{marginTop: '12px'}}>
+            <div style={{marginTop: '20px'}}>
                 {console.log("This is the tasklist component")}
                 {console.log(props)}
             {
@@ -11,12 +11,8 @@ export const TaskList = (props)=> {
                     return (
                         <ListItem key={task.taskId} item={task} handleTaskPlay={props.handleTaskPlay} handleDeleteTask={()=> props.handleDeleteTask(index)}/>
                     )
-                }): <p style={{textAlign:'center',color:'grey'}}>Please create a new workflow.</p>
+                }): <p style={{textAlign:'center',color:'grey'}}>Please create a new workflow</p>
             }
-            {/* {
-                props.tasks.length === 0 &&
-                <p style={{textAlign:'center',color:'grey'}}>Please create a new workflow.</p>
-            } */}
             </div>
     )
 };

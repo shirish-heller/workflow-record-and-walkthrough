@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import styles from './SelfHelp.module.css';
 import { Popup } from '../../components/Popup/Popup';
-// import {
-//     Button, Form
-// } from 'react-bootstrap';
 import Button from '../../components/Button/Button';
 import $ from 'jquery';
 import Drawer from '../../components/Drawer/Drawer';
@@ -312,6 +309,7 @@ class SelfHelp extends Component {
                 xPath:lastRecordedXPath
             }
           });
+          this.stepNameRef.current.focus();
     };
 
     handleAddTask = ()=> {
@@ -439,25 +437,21 @@ class SelfHelp extends Component {
                     <span style={{fontSize: 15}}>{this.getStepMessage()}</span>
                     <div className={styles.PopupButtonContainer}>
                     {/* SKIP Button */}
-                        <Button className={styles.ButtonContainer}
-                            style={{color: '#fff', minWidth: 70, fontWeight: 'bold', fontSize: 14, textDecoration: 'underline', outline: 'none'}} onClick={this.stopGuide}>
+                        <a style={{color: '#fff', minWidth: 70, fontWeight: 'bold', fontSize: 14, textDecoration: 'underline', outline: 'none'}} onClick={this.stopGuide}>
                             Skip
-                        </Button>
+                        </a>
 
                         {this.state.currentStep!==null && this.state.currentStep === (this.state.tasks[this.state.currentTask].steps.length)-1?
                     // FINISH Button
                         <Button className={styles.ButtonContainer}
-                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.stopGuide}>
-                            Finish
-                            {/* <i className="fa fa-check-circle" style={{color: this.state.theme, marginLeft: 3, fontSize: 16}}/> */}
+                            style={{backgroundColor: "#fff", color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.stopGuide}>
+                            Finish &#x2713;
                         </Button>    
                         :
                     // NEXT Button
-                        <Button
-                            variant="light" className={styles.ButtonContainer}
-                            style={{color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.handleNextStepPress}>
-                            Next >
-                            {/* <i className="fa fa-angle-right" style={{color: this.state.theme, marginLeft: 4, fontSize: 16}}/> */}
+                        <Button className={styles.ButtonContainer}
+                            style={{backgroundColor: "#fff", color: this.props.themeColor, minWidth: 70, fontWeight: 'bold', fontSize: 14, outline: 'none'}} onClick={this.handleNextStepPress}>
+                            Next &#x276F;
                         </Button>
                     }
                     </div>
@@ -468,14 +462,14 @@ class SelfHelp extends Component {
                 {
                     this.state.isRecordStepPopupOpen &&
                 <Popup clickCapture={this.state.recordClickCapture}>
-                    {/* <Form.Group controlId="newTaskName"> */}
-                        <span style={{textDecorationLine: 'underline', fontSize: 15, fontWeight: 'bold'}}>Step Description</span>
-                        <textarea ref={this.stepNameRef} rows="2"/>
-                    {/* </Form.Group> */}
-                    <Button variant="light" style={{backgroundColor: '#4a90e2'}} size="sm" onClick={this.handleAddStep}>
-                        {/* <i className="fa fa-plus" style={{fontSize:'13px', marginRight: 4}}></i> */}
-                        <span style={{fontSize: 14, fontWeight: 'bold', color: '#fff'}}>+ ADD STEP</span>
-                    </Button>
+                    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                        <span style={{textDecorationLine: 'underline', fontSize: 15, fontWeight: 'bold', marginBottom: 5}}>Step Description</span>
+                        <textarea ref={this.stepNameRef} style={{marginBottom: 5}} rows="2"/>
+                        <Button variant="light" style={{backgroundColor: '#4a90e2'}} size="sm" onClick={this.handleAddStep}>
+                            <span style={{fontSize: 14, fontWeight: 'bold', color: '#fff'}}>+ ADD STEP</span>
+                        </Button>
+                    </div>
+
                 </Popup>
                 }
             </div>
