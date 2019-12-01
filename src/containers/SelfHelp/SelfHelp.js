@@ -79,7 +79,6 @@ class SelfHelp extends Component {
                 this.handleStepChange(nextState.currentTask, nextState.currentStep);
             }
         }
-        console.log("Fine 1");
     }
 
     handleStepChange = (taskIndex = 0, stepIndex = 0)=> {
