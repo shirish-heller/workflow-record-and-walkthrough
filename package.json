@@ -1,6 +1,6 @@
 {
   "name": "workflow-record-and-walkthrough",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "author": {
     "name": "Shivansh Rajolia",
     "url": "https://github.com/shirish-heller"
@@ -17,7 +17,7 @@
     "react": "^16.12.0"
   },
   "dependencies": {
-    "jquery": "3.4.1",
+    "jquery-lite": "^2.2.3",
     "lodash": "^4.17.15",
     "lodash.template": "^4.5.0",
     "mixin-deep": "^2.0.1",
@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack --mode=production",
+    "build": "webpack -p --mode=production",
     "build-dev": "rimraf dist && NODE_ENV=production babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -69,6 +69,7 @@
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
+    "brotli-webpack-plugin": "^1.1.0",
     "css-loader": "^3.2.0",
     "path": "^0.12.7",
     "style-loader": "^1.0.0",
