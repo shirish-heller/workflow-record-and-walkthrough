@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './SelfHelp.module.css';
 import { Popup } from '../../components/Popup/Popup';
 import Button from '../../components/Button/Button';
-import $ from 'jquery';
+import $ from 'jquery-lite';
 import Drawer from '../../components/Drawer/Drawer';
 
 let lastElementHighlighted = null;

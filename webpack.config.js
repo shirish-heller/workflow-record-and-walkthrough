@@ -1,9 +1,8 @@
 var path = require('path');
+var BrotliPlugin = require('brotli-webpack-plugin');
 const cssModuleRegex = /\.module\.css$/;
-const cssRegex = /\.css$/;
 module.exports = {
-    // mode: 'production',
-    devtool: 'source-map',
+    devtool: '',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -35,5 +34,24 @@ module.exports = {
 
         ]
     },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all'
+          }
+        }
+      }
+    },
+    plugins: [
+      new BrotliPlugin({
+        asset: '[path].br[query]',
+        test: /\.(js|css|html|svg)$/,
+        threshold: 10240,
+        minRatio: 0.8
+      })
+    ],
 
 };
