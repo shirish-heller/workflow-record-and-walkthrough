@@ -89,38 +89,41 @@ class SelfHelp extends Component {
             this.state.guideClickCapture.elementCaptured.style.setProperty('box-shadow', 'none');
         }
         let element = this.getElementByXpath(this.state.tasks[currentTask].steps[currentStep].xPath);
-        element.style.boxShadow = "0 0 0 1px " + this.props.highlightColor + ", 0 0 0 8px " + this.props.highlightColor;
-        let elementBoundingRect = element.getBoundingClientRect();
-        let elementBottomLimit = elementBoundingRect.bottom;
-        let elementLeftLimit = elementBoundingRect.left;
-        let elementTopLimit = elementBoundingRect.top;
-        // New changes
-        let xCoordinateOfPopUp = elementLeftLimit + 20;
-        let yCoordinateOfPopUp = elementBottomLimit + 20;
-
-        // As MaxHeightOfPopU=150
-        if(yCoordinateOfPopUp+150>this.state.recordClickCapture.screenHeight)
-            yCoordinateOfPopUp = elementTopLimit-20-150;
-        // As MaxWidthofPopUp=300
-        if(xCoordinateOfPopUp+300>this.state.recordClickCapture.screenWidth){
-            var diff = (xCoordinateOfPopUp+300)-this.state.recordClickCapture.screenWidth
-            xCoordinateOfPopUp = xCoordinateOfPopUp-diff-20;
-        }
-
-        this.setState({
-            guideClickCapture: {
-                clientX: xCoordinateOfPopUp,
-                clientY: yCoordinateOfPopUp,
-                screenWidth: this.state.guideClickCapture.screenWidth,
-                screenHeight: this.state.guideClickCapture.screenHeight,
-                elementCaptured: element
-            },
-            isGuideStepPopupOpen: true,
-            isGuideActive: true,
-            drawer: {
-                showDrawer: false
+        if(element) {
+            element.style.boxShadow = "0 0 0 1px " + this.props.highlightColor + ", 0 0 0 8px " + this.props.highlightColor;
+            let elementBoundingRect = element.getBoundingClientRect();
+            let elementBottomLimit = elementBoundingRect.bottom;
+            let elementLeftLimit = elementBoundingRect.left;
+            let elementTopLimit = elementBoundingRect.top;
+            // New changes
+            let xCoordinateOfPopUp = elementLeftLimit + 20;
+            let yCoordinateOfPopUp = elementBottomLimit + 20;
+    
+            // As MaxHeightOfPopU=150
+            if(yCoordinateOfPopUp+150>this.state.recordClickCapture.screenHeight)
+                yCoordinateOfPopUp = elementTopLimit-20-150;
+            // As MaxWidthofPopUp=300
+            if(xCoordinateOfPopUp+300>this.state.recordClickCapture.screenWidth){
+                var diff = (xCoordinateOfPopUp+300)-this.state.recordClickCapture.screenWidth
+                xCoordinateOfPopUp = xCoordinateOfPopUp-diff-20;
             }
-          });
+    
+            this.setState({
+                guideClickCapture: {
+                    clientX: xCoordinateOfPopUp,
+                    clientY: yCoordinateOfPopUp,
+                    screenWidth: this.state.guideClickCapture.screenWidth,
+                    screenHeight: this.state.guideClickCapture.screenHeight,
+                    elementCaptured: element
+                },
+                isGuideStepPopupOpen: true,
+                isGuideActive: true,
+                drawer: {
+                    showDrawer: false
+                }
+              });
+        }
+       
     }
 
     onAddStepClick = (taskNameRef)=> {
@@ -143,7 +146,8 @@ class SelfHelp extends Component {
     };
 
     getElementByXpath = (path)=> {
-        return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        let pathElement =  document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+        return pathElement?pathElement.singleNodeValue: null;
     };
 
     handleDrawerCollapse = () => {
@@ -166,8 +170,12 @@ class SelfHelp extends Component {
     };
 
     handleTaskPlay = (taskId, e)=> {
+
         for(let i=0; i< this.state.tasks.length; i++) {
             if(this.state.tasks[i].taskId === taskId) {
+            if(window.location.href !== this.state.tasks[i].taskRootUrl) {
+                window.location.assign(this.state.tasks[i].taskRootUrl);
+            }
                 this.setState({
                     currentStep: 0,
                     currentTask: i,
@@ -269,6 +277,7 @@ class SelfHelp extends Component {
 
     handleInspectorSelectedElement=(e)=>{
         this.stopInspectMode();
+        e.preventDefault();
         e.stopPropagation();
         let element = this.getElementByXpath(lastRecordedXPath);
         if(this.state.recordClickCapture.elementCaptured) {

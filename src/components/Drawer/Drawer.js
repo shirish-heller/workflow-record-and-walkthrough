@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styles from './Drawer.module.css';
 import Button from '../Button/Button';
 import { TaskList } from '../TaskList/TaskList';
-import { bold } from 'ansi-colors';
 
 class Drawer extends Component {
 
@@ -27,7 +26,7 @@ class Drawer extends Component {
                     <div className={styles.TitleBanner}>
                         {/* Collapse Button */}
                         <div style={{display: 'flex', flex: 20}}>
-                            <Button variant="light" className={styles.ButtonContainer} style={{backgroundColor: '#fff', borderRadius: '50px', height: '38px', width: '38px'}} onClick={this.props.handleDrawerCollapse}>
+                            <Button className={styles.ButtonContainer} style={{backgroundColor: '#fff', borderRadius: '50px', height: '38px', width: '38px'}} onClick={this.props.handleDrawerCollapse}>
                                 <span style={{fontSize: 22, color: '#000', fontWeight: 'bold'}}>&#x2212;</span>
                             </Button>
                         </div>
@@ -81,8 +80,8 @@ class Drawer extends Component {
                                     <span style={{fontWeight: 'bold', fontSize: 15, marginRight: 3, paddingBottom: 2}}>+</span>
                                     <span style={{fontSize: 12}}>Add New Step</span>
                                 </button>
-                                <br/>
-                                <div style={{alignItems: 'center', display:'flex',flex:1,justifyContent:'space-between'}}>
+
+                                <div style={{alignItems: 'center', display:'flex',flex:1,justifyContent:'space-between', marginTop: 20}}>
                                     <Button variant="light" size="sm" onClick={this.props.handleCancelClick}>
                                         <span style={{fontSize: 14, fontWeight: 'bold', color: '#4a90e2'}}>Cancel</span>
     
