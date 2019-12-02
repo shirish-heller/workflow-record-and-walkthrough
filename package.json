@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git://github.com/shirish-heller/workflow-record-and-walkthrough.git"
   },
-  "main": "build/index.js",
+  "main": "index.js",
   "module": "./dist/index.js",
   "license": "ISC",
   "private": false,

@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import SelfHelp from './containers/SelfHelp/SelfHelp';
 
 function App() {
   return (
