@@ -1,6 +1,6 @@
 {
   "name": "workflow-record-and-walkthrough",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "author": {
     "name": "Shivansh Rajolia",
     "url": "https://github.com/shirish-heller"
@@ -9,8 +9,7 @@
     "type": "git",
     "url": "git://github.com/shirish-heller/workflow-record-and-walkthrough.git"
   },
-  "main": "index.js",
-  "module": "./dist/index.js",
+  "main": "build/index.js",
   "license": "ISC",
   "private": false,
   "peerDependencies": {
